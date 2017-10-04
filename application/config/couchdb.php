@@ -1,6 +1,6 @@
 <?PHP
 
 
-$config["couch_dsn"] = "http://118.91.130.18:5983/";
-$config["couch_database"] = "opensrp-form";
+$config["couch_dsn"] = "http://url:port/";
+$config["couch_database"] = "database";
 
