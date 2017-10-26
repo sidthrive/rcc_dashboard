@@ -318,7 +318,7 @@ class CouchData extends CI_Model{
         
         $config['center'] = $coor_string;
         $config['zoom'] = 17;
-        $config['apiKey'] = 'AIzaSyAxJiDItoG0qBOffucWuEL2lyJ2F0Vambo';
+        $config['apiKey'] = 'yourGoogleMapsAPIKey';
         $this->googlemaps->initialize($config);
 
         $marker = array();
@@ -338,7 +338,7 @@ class CouchData extends CI_Model{
         
         $config['center'] = $coor_string;
         $config['zoom'] = 17;
-        $config['apiKey'] = 'AIzaSyAxJiDItoG0qBOffucWuEL2lyJ2F0Vambo';
+        $config['apiKey'] = 'yourGoogleMapsAPIKey';
         $this->googlemaps->initialize($config);
 
         $marker = array();
@@ -357,7 +357,7 @@ class CouchData extends CI_Model{
         
         $config['center'] = "-6.2 106.8357";
         $config['zoom'] = 11;
-        $config['apiKey'] = 'AIzaSyAxJiDItoG0qBOffucWuEL2lyJ2F0Vambo';
+        $config['apiKey'] = 'yourGoogleMapsAPIKey';
         $this->googlemaps->initialize($config);
 
         $marker = array();
@@ -392,7 +392,7 @@ class CouchData extends CI_Model{
         $config['center'] = '-6.220879, 106.88257';
         $config['zoom'] = 'auto';
         $config['map_height'] = '500px';
-        $config['apiKey'] = 'AIzaSyAxJiDItoG0qBOffucWuEL2lyJ2F0Vambo';
+        $config['apiKey'] = 'yourGoogleMapsAPIKey';
         $this->googlemaps->initialize($config);
         
         foreach ($gps as $id=>$g){
