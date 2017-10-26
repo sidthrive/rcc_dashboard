@@ -19,7 +19,7 @@ class Pdf extends CI_Controller {
     public function save($form)
     {
         $this->load->view("demo/pdf");
-        //header('Refresh: 1; URL='.base_url()."pdf/show/".$form);
+        header('Refresh: 1; URL='.base_url()."pdf/show/".$form);
     }
 
     public function savecharts($name)
