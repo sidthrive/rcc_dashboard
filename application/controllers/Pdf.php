@@ -8,7 +8,7 @@ class Pdf extends CI_Controller {
     }
 
     public function index(){
-        redirect('generate_report');
+        var_dump(getcwd());
     }
 
     public function show($form){
@@ -19,7 +19,7 @@ class Pdf extends CI_Controller {
     public function save($form)
     {
         $this->load->view("demo/pdf");
-        header('Refresh: 1; URL='.base_url()."pdf/show/".$form);
+        //header('Refresh: 1; URL='.base_url()."pdf/show/".$form);
     }
 
     public function savecharts($name)
@@ -38,5 +38,13 @@ class Pdf extends CI_Controller {
         else {
             echo 'An error occurred.';
         }
+    }
+
+    public function savechartssvg($name)
+    {
+        $data = str_replace(' ', '+', $_POST['svg_data']);
+        $data = base64_decode($data);
+        $fileName = $name.'.svg';
+        file_put_contents (getcwd()."/asset/images/".$fileName,$data);
     }
 }

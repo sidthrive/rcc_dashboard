@@ -48,6 +48,17 @@
         });
       }
 
+      function save_svg(name){
+        var svg = document.getElementById(name).children[0].innerHTML;
+        var svg64 = btoa(svg);
+        var data = "svg_data=" + svg64;
+        $.ajax({
+          type: "POST",
+          url: "<?=base_url()?>pdf/savechartssvg/"+name,
+          data: data
+        });
+      }
+
       $.fn.pieChart = function(id,title,data,type){
         var jdata = JSON.parse(data);
         var chart = new Highcharts.chart(id, {
