@@ -63,6 +63,11 @@ function updateLocation(url, level, loc){
     
 }
 
+
+// This is basic pie chart function from highchart library, you can use other chart option that meet your need
+// check the highchart documentation for more example :
+// https://www.highcharts.com/demo
+// https://www.highcharts.com/docs
 $.fn.pieChart = function(id, url, title){
     var chart = new Highcharts.chart(id, {
         chart: {

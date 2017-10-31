@@ -1,8 +1,17 @@
+<!-- 
+    
+    This is example for how to save highchart graph to png or svg file to disk in server side
+    In this example we use 5 chart
+    At first, we generate the chart normally, then convert the svg data and send to method that will process it
 
+ -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <link href="<?=base_url()?>asset/highchart/css/highcharts.css" rel="stylesheet">
+    <!-- 
+        We use this css to cover the entire screen with loading screen, so that the graph that being generated will not shown to user
+     -->
     <style type="text/css">
       #load{
           width:100%;
@@ -35,6 +44,8 @@
 </html>
 
 <script>
+      // this javascript function will convert svg data to png-base64 data with canvg library
+      // and send them using ajax to another method
       function save_img(name){
         var svg = document.getElementById(name).children[0].innerHTML;
         canvg(document.getElementById('canvas'),svg);
@@ -48,6 +59,8 @@
         });
       }
 
+      // this javascript function will convert svg data to base64 data
+      // and send them using ajax to another method
       function save_svg(name){
         var svg = document.getElementById(name).children[0].innerHTML;
         var svg64 = btoa(svg);
@@ -59,6 +72,8 @@
         });
       }
 
+      // this is the highchart function that will generate the graph
+      // at the end we call the save image function that we want
       $.fn.pieChart = function(id,title,data,type){
         var jdata = JSON.parse(data);
         var chart = new Highcharts.chart(id, {
@@ -85,6 +100,8 @@
               data: jdata
           }]
         });
+
+        // if you want to save it to svg file, change this to save_svg(id)
         save_img(id);
         $(".ch").hide();
     }

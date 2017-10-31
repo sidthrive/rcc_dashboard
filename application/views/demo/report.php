@@ -16,6 +16,11 @@
 
           <div class="report">
               <?php $this->load->view("demo/navbar"); ?>
+              <!-- 
+                  This section separate what the user can see based on their user level
+                  It will load another view file that loaded the graph for the report
+                  Please check the tab1 files for explanation, as the other files just the same
+               -->
               <div id="tabs">
                   <ul>
                     <li><a href="#tabs-1">Registered Household</a></li>

@@ -2,8 +2,16 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/*
+    This is model class for generate report
+    This model contains method that used to get the data from database and compile it into excel or pdf files
+    some of the method is only for debug purpose
+*/
+
 class Report extends CI_Model{
 
+    // This is example structure of the report
+    // you can make any structure that fit your purpose
     protected $table_col = [
         "unique_identifier"=> ['child_age','respondent_age','respondent_education','relation_to_child','village'],
         "household_character"=> ['household_size','dairy_product','number_of_rooms','informal_income','spent_on_food'],
@@ -48,6 +56,8 @@ class Report extends CI_Model{
         var_dump(json_encode($res));exit;
     }
     
+    // this method will fetch the particular column form database table
+    // and associate it with string name from xlsForm 
     public function getData($table,$col){
         $ret = [];
         $res = [];
@@ -62,6 +72,8 @@ class Report extends CI_Model{
             }
         }
         ksort($ret);
+
+        //this will get the data form xlsForm file that contain the survey detail
         $form = $this->getFormDetail($table);
         if(explode(' ',$form['survey'][$col]['type'])[0]=='select_one'){
             $xcol = explode(' ',$form['survey'][$col]['type'])[1];
@@ -76,9 +88,12 @@ class Report extends CI_Model{
             }
             
         }
+        // return it with json form
         return json_encode($res);
     }
     
+    // this method will get the data from xlsForm files by using PHPExcel library
+    // and return it with array data
     public function getFormDetail($form){
         $this->load->library('PHPExcell');
         $formname = array("unique_identifier","household_character","health_seeking_behaviour","knowledge_regarding_immunization","attitude_regarding_immunization","immunization_coverage","gps");
@@ -140,10 +155,19 @@ class Report extends CI_Model{
         return $res;
     }
 
+    // This method is example for download report in the form of excel files
+    // Using PHPExcel library, you can edit most of the excel file,
+    // you can read the documentation for better explanation
+    // https://github.com/PHPOffice/PHPExcel/wiki/User-Documentation-Overview-and-Quickstart-Guide
     public function downloadexcel($form=''){
         $this->load->library('PHPExcell');
+        // this will create a PHPExcel object reader that can read existing excel file
+        // but in this example we will not using this
         $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+
+        // this will create a new excel object, at initialization this object will already have one worksheet 
         $fileObject = new PHPExcel('Excel2007');
+        // change the initial worksheet name
         $fileObject->getSheet(0)->setTitle('Data');
         $row = 1;
         $col = 'A';
@@ -174,7 +198,10 @@ class Report extends CI_Model{
             $row++;
             $rowIterator = new PHPExcel_Worksheet_RowCellIterator($fileObject->getSheet(0),++$row);
         }
+
+        // create worksheet object so we can add it into excel object
         $myWorkSheet = new PHPExcel_Worksheet($fileObject, 'Graph');
+        // add the worksheet object into the excel object
         $fileObject->addSheet($myWorkSheet);
         $fileObject->setActiveSheetIndexByName('Graph');
         $col_s = 'B';
@@ -196,7 +223,8 @@ class Report extends CI_Model{
             $row_e = $row_e + 16;
             $fileObject->getActiveSheet()->addChart($chart);
         }
-        
+
+        // clean the output buffer so the excel download will not get error
         ob_end_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="'.$form.'.xlsx"'); 
@@ -207,6 +235,8 @@ class Report extends CI_Model{
         $saveContainer->save('php://output');
     }
 
+    // This method will generate pdf file using TCPDF library
+    // you can have more example here : https://tcpdf.org/examples/
     public function downloadpdf($form=''){
         $form = 'unique_identifier';
         $data = [];
