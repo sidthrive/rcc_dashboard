@@ -11,17 +11,26 @@ class Pdf extends CI_Controller {
         var_dump(getcwd());
     }
 
+    // this method will show the generated pdf to the browser or download it
     public function show($form){
         $this->load->model('Report');
         $this->Report->downloadpdf($form);
     }
 
+    // this method is called from download pdf button from generate report url
+    // this will load demo/pdf view file that contain javascript that will save graph to disk
+    // after 1 second, this will redirected to show function to show the pdf
     public function save($form)
     {
+        // check this view file to better explanation to save graph to disk
         $this->load->view("demo/pdf");
+        // after 1 second, this will redirected to show function to show the pdf
         header('Refresh: 1; URL='.base_url()."pdf/show/".$form);
     }
 
+
+    // this method is called from javascript funcion in demo/pdf file
+    // this will save the image data that sent by POST to png image type
     public function savecharts($name)
     {
         $data = str_replace(' ', '+', $_POST['bin_data']);
@@ -40,6 +49,8 @@ class Pdf extends CI_Controller {
         }
     }
 
+    // this method is called from javascript funcion in demo/pdf file
+    // this will save the image data that sent by POST to svg image type
     public function savechartssvg($name)
     {
         $data = str_replace(' ', '+', $_POST['svg_data']);
